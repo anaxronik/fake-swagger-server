@@ -31,12 +31,11 @@ export function readSwaggerConfig(config: SwaggerConfig): FileParams[] {
   const result: FileParams[] = [];
   Object.entries(config.paths).forEach(([path, pathConfig]) => {
     Object.entries(pathConfig).forEach(([method, methodConfig]) => {
-      console.log({ method, methodConfig });
       result.push({
         filePath: replaceDynamicParamsInUrl(
           `${path}/${method.toUpperCase()}.json`
         ),
-        content: getSwaggerContent(methodConfig),
+        content: getSwaggerContent(methodConfig, { path, method }),
       });
     });
   });

@@ -1,5 +1,12 @@
+import example from "../example.json";
 import { createFiles } from "./createJsonFiles";
+import { readSwaggerConfig } from "./readSwaggerConfig";
 import { deleteFilesAndFolders } from "./removeFiles";
+
+example;
+
+const files = readSwaggerConfig(example as any);
+console.log(files);
 
 const fileUrl: string = "https://petstore3.swagger.io/api/v3/openapi.json";
 
@@ -12,23 +19,13 @@ const fileUrl: string = "https://petstore3.swagger.io/api/v3/openapi.json";
 //     console.error(error);
 //   });
 
+const folderName = "./routes";
+
 deleteFilesAndFolders("./routes").then(() => {
-  createFiles([
-    {
-      filePath: "./routes/my/123/GET.json",
-      content: { test: "test" },
-    },
-    {
-      filePath: "./routes/my1/123/POST.json",
-      content: { test: "test" },
-    },
-    {
-      filePath: "./routes/my2/123/PUT.json",
-      content: { test: "test" },
-    },
-    {
-      filePath: "./routes/my3/123/DELETE.json",
-      content: { test: "test" },
-    },
-  ]);
+  createFiles(
+    files.map((f) => ({
+      ...f,
+      filePath: `${folderName}/${f.filePath}`,
+    }))
+  );
 });

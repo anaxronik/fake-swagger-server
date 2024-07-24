@@ -19,13 +19,13 @@ const fileUrl: string = "https://petstore3.swagger.io/api/v3/openapi.json";
 //     console.error(error);
 //   });
 
-const folderName = "./routes";
+const FOLDER_NAME = "./routes";
 
 deleteFilesAndFolders("./routes").then(() => {
   createFiles(
     files.map((f) => ({
       ...f,
-      filePath: `${folderName}/${f.filePath}`,
+      filePath: `${FOLDER_NAME}/${f.filePath}`,
     }))
   );
 });
